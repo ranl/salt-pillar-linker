@@ -44,6 +44,10 @@ tomcat:
 apache:
   modjk:
     ajp: 8080
+    abc:
+      def: /var/log/myapp
+    123:
+      another_key: /var/log/myapp
 
 mysql.port: __PILLAR_LINK__ db:port
 ```
