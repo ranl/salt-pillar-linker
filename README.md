@@ -46,7 +46,8 @@ apache:
     ajp: 8080
 
 mysql.port: __PILLAR_LINK__ db:port
-```notice that the value of `mysql.port` didn't change because `pillar['db']['port']` does not exists !
+```
+notice that the value of `mysql.port` didn't change because `pillar['db']['port']` does not exists !
 
 issues
 ======
