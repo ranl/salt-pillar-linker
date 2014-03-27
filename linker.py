@@ -73,8 +73,8 @@ class Graph():
         marked_nodes[node] = 1
         if node in self.data:
             for child in self.data[node]:
-                self._visit(child, marked_nodes, node)
-            self.sorted.insert(0, node)
+                self._visit(child, marked_nodes, root)
+            self.sorted.append(node)
         marked_nodes[node] = 2
 
     def add_edge(self, src, dst):
@@ -133,10 +133,12 @@ def linker(pillar, graph):
     ret = {}
     for key in graph.sorted:
         for ptr in graph.get_neighbors(key):
-            data = salt.utils.traverse_dict(pillar, ptr, '_|-')
+            data = salt.utils.traverse_dict(ret, ptr, '_|-')
             if data == '_|-':
-                log.error('missing address "{0}" --> "{1}" in pillar data'.format(key, ptr))
-                continue
+                data = salt.utils.traverse_dict(pillar, ptr, '_|-')
+                if data == '_|-':
+                    log.error('missing address "{0}" --> "{1}" in pillar data'.format(key, ptr))
+                    continue
 
             update_dict = {}
             keys_to_add = key.split(':')
